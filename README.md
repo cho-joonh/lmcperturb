@@ -39,7 +39,7 @@ and has optional inputs with default values when not user-specified:
 
 The lower or upper bound of a constraint in `mom_constr` and `par_constr` may be `-Inf` or `Inf` if no finite bound. When the model has no natural parameter space constraint and the constraint is set to `par_constr = NULL`, default parameter space constraints `[-1e+7,1e+7]` for individual coordinates are imposed, i.e., a large hypercube, to compactify the search space. If a larger search space is desired, `par_constr` should be specified.
 
-  + If the parameter space is defined only by bounds on individual coordinates, i.e., the parameter space is a hyperrectangle `lb <= x <= ub` where `x` is a parameter vector, then define the list `par_constr` with a matrix of bounds for `par_constr[[1]] = rbind(lb, ub)` and set `par_constr[[2]] = NULL` and `par_constr[[3]] = NULL`.
+  + If the parameter space is defined only by bounds on individual coordinates, i.e., the parameter space is a hyperrectangle `lb <= x <= ub` where `x` is a parameter vector, then define the list `par_constr` with a matrix of bounds `par_constr[[1]] = rbind(lb, ub)` and set `par_constr[[2]] = NULL` and `par_constr[[3]] = NULL`.
   + Similarly, if the parameter space is defined only by jointly defined constraints `lb <= Ax <= ub` for some nonidentity matrix `A`, set `par_constr[[1]] = NULL`, `par_constr[[2]] = A` and `par_constr[[3]] = rbind(lb, ub)`.
 
 For additional examples, see Examples 1 and 2 below. The package currently supports only two solvers, one from each of the packages `lpSolve` and `Rmosek`.
