@@ -1,0 +1,30 @@
+Package: lmcperturb
+Title: Confidence Sets for Functionals of Partially Identified Parameter
+Version: 1.0.0
+Authors@R: c(
+    person(given = "JoonHwan",
+           family = "Cho",
+           role = c("aut", "cre"),
+           email = "joonhwan.cho@mail.utoronto.ca"),
+    person(given = "Thomas",
+           family = "Russell",
+           role = "aut",
+           email = "thomas.russell3@carleton.ca"))
+BugReports: https://github.com/cho-joonh/lmcperturb/issues
+Description: This package provides function to construct confidence sets for
+    linear functionals or subvector of a partially identified parameter defined
+    by linear moment inequalities. The confidence set is constructed by
+    bootstrapping perturbed linear programming problems that define that define
+    the lower and upper bounds of the identified set for the functional of
+    interest. The procedure is as described in Cho and Russell (2020, 
+    arXiv:1810.03180).
+License: AGPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    stats,
+    lpSolve
+Suggests:
+    Rmosek
