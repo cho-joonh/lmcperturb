@@ -7,10 +7,7 @@
 
 <!-- badges: end -->
 
-The goal of lmcperturb is to provide code to construct a uniformly valid
-confidence set for a linear function of partially identified parameters
-defined by linear moment constraints using the procedure described in
-Cho and Russell (2020, <arXiv:1810.03180>).
+The goal of lmcperturb is to provide code to construct a uniformly valid confidence set for a linear function of partially identified parameters defined by linear moment constraints using the procedure described in Cho and Russell (2020, <arXiv:1810.03180>).
 
 ## Installation
 
@@ -20,57 +17,29 @@ You can install this GitHub version of lmcperturb with:
 devtools::install_github("cho-joonh/lmcperturb")
 ```
 
-The package requires R CRAN package `lpSolve` and alternatively suggests
-the package `Rmosek`. `Rmosek` is suggested so that the user utilizes
-its large-scale linear programming capabilities that enhances
-computational performance when the dimension of the parameter space
-and/or the number of moment (in)equalities are large. `lpSolve` can be
-installed from CRAN to your library with the usual command
-`install.packages()`. However, `Rmosek` on CRAN is only a meta-package
-designed to help with the installation of `Rmosek`. To install and run
-`Rmosek`, you must request a (free personal academic) licence and follow
-the installation instructions in Rmosek document on
+The package requires R CRAN package `lpSolve` and alternatively suggests the package `Rmosek`. `Rmosek` is suggested so that the user utilizes its large-scale linear programming capabilities that enhances computational performance when the dimension of the parameter space and/or the number of moment (in)equalities are large. `lpSolve` can be installed from CRAN to your library with the usual command `install.packages()`. However, `Rmosek` on CRAN is only a meta-package designed to help with the installation of `Rmosek`. To install and run `Rmosek`, you must request a (free personal academic) licence and follow the installation instructions in Rmosek document on
 <https://www.mosek.com/documentation/>.
 
 ## Description
 
-The main function `perturbCS` has required inputs: + `data`: a data
-matrix; + `psi_fn`: a function that maps data to coefficients of linear
-functional of interest (the first element must be the intercept); +
-`mom_constr`: a list containing two functions as elements, where the
-first function maps data to matrix of coefficients of linear moment
-constraints and the second function maps data to lower and upper bounds
-of the moment constraints; and has optional inputs with default values
-when not user-specified: + `par_constr`: a list containing three
-matrices as elements, where the first matrix has two rows that define
-the parameter space constraints for each coordinate, the second matrix
-is a linear map of the parameter vector that together with the third
-matrix (for lower and upper bounds) determine the boundaries of the
-parameter space (default `par_constr=NULL`); + `max_perturb`: a list
-containing two vectors as elements, where the first vector of length two
-determines the support of the perturbation distribution for the linear
-functional of interest, and the second vector of length two determines
-that for the moment constraints (default
-`max_perturb=list(c(-1e-6,1e-6),c(0,1e-6))`); + `alpha`: a numeric
-vector (possibly of length one) for desired significance level of the
-confidence set to be constructed (default `alpha=c(.10,.05,.01)`); +
-`tol`: a nonnegative number for the tolerance level of small-sample
-thresholding (default `tol=1`); + `boot`: a positive integer for
-bootstrap sample size (default `boot=999`); + `method`: a string; either
-`"lpSolve"` or `"Rmosek"`. The lower or upper bound of a constraint in
-`mom_constr` and `par_constr` may be `-Inf` or `Inf` if no finite bound.
-When no natural parameter space constraint is present and
-`par_constr=NULL`, default parameter space constraints `[-1e+7,1e+7]`
-for each coordinate is imposed, i.e., a large hypercube. The package
-currently supports only two solvers, one from each of the packages
-`lpSolve` and `Rmosek`.
+The main function `perturbCS` has required inputs:
+  + `data`: a data matrix;
+  + `psi_fn`: a function that maps data to coefficients of linear functional of interest (the first element must be the intercept);
+  + `mom_constr`: a list containing two functions as elements, where the first function maps data to matrix of coefficients of linear moment constraints and the second function maps data to lower and upper bounds of the moment constraints;
+and has optional inputs with default values when not user-specified:
+  + `par_constr`: a list containing three matrices as elements, where the first matrix has two rows that define the parameter space constraints for each coordinate, the second matrix is a linear map of the parameter vector that together with the third matrix (for lower and upper bounds) determine the boundaries of the parameter space (default `par_constr=NULL`);
+  + `max_perturb`: a list containing two vectors as elements, where the first vector of length two determines the support of the perturbation distribution for the linear functional of interest, and the second vector of length two determines that for the moment constraints (default `max_perturb=list(c(-1e-6,1e-6),c(0,1e-6))`);
+  + `alpha`: a numeric vector (possibly of length one) for desired significance level of the confidence set to be constructed (default `alpha=c(.10,.05,.01)`);
+  + `tol`: a nonnegative number for the tolerance level of small-sample thresholding (default `tol=1`);
+  + `boot`: a positive integer for bootstrap sample size (default `boot=999`);
+  + `method`: a string; either `"lpSolve"` or `"Rmosek"`.
+The lower or upper bound of a constraint in `mom_constr` and `par_constr` may be `-Inf` or `Inf` if no finite bound. When no natural parameter space constraint is present and `par_constr=NULL`, default parameter space constraints `[-1e+7,1e+7]` for each coordinate is imposed, i.e., a large hypercube. The package currently supports only two solvers, one from each of the packages `lpSolve` and `Rmosek`.
 
 ## Examples
 
 ### Missing Data Example
 
-See Appendix B.1 of Cho and Russell (2020, <arXiv:1810.03180>). The DGP
-and the model can be declared as follows:
+See Appendix B.1 of Cho and Russell (2020, <arXiv:1810.03180>). The DGP and the model can be declared as follows:
 
 ``` r
 # data generating process
@@ -119,8 +88,7 @@ par_constr$jointmat = matrix(rep(1,10), 1, 10)
 par_constr$jointb = rbind(1, 1)
 ```
 
-To construct a confidence set for the average outcome with a random
-sample of size `n=100` from population `c=2`:
+To construct a confidence set for the average outcome with a random sample of size `n=100` from population `c=2`:
 
 ``` r
 library(lmcperturb)
@@ -133,8 +101,7 @@ perturbCS(data, psi_fn, mom_constr, par_constr, method="Rmosek") # using Rmosek
 
 ### Counterfactual Policy Example
 
-See Appendix B.3 of Cho and Russell (2020, <arXiv:1810.03180>). The DGP
-and the model can be declared as follows:
+See Appendix B.3 of Cho and Russell (2020, <arXiv:1810.03180>). The DGP and the model can be declared as follows:
 
 ``` r
 # preset vectors (used to define objective function and moment constraints)
@@ -226,9 +193,7 @@ for (x in 1:4) {
 par_constr$jointb = rbind(c(rep(1,8), rep(0,100)), c(rep(1,8), rep(0,100)))
 ```
 
-To construct a confidence set for the average outcome difference between
-competing policies A and B with a random sample of size `n=1000` from
-population `c=1`:
+To construct a confidence set for the average outcome difference between competing policies A and B with a random sample of size `n=1000` from population `c=1`:
 
 ``` r
 library(lmcperturb)
