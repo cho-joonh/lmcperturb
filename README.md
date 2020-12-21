@@ -17,7 +17,7 @@ You can install this GitHub version of lmcperturb with:
 devtools::install_github("cho-joonh/lmcperturb")
 ```
 
-The package requires R CRAN package `lpSolve` and alternatively suggests the package `Rmosek`. `Rmosek` is suggested so that the user utilizes its large-scale linear programming capabilities that enhances computational performance when the dimension of the parameter space and/or the number of moment (in)equalities are large. `lpSolve` can be installed from CRAN to your library with the usual command `install.packages()`. However, `Rmosek` on CRAN is only a meta-package designed to help with the installation of `Rmosek`. To install and run `Rmosek`, you must request a (free personal academic) licence and follow the installation instructions in Rmosek document on
+The package requires R CRAN package `lpSolve` and alternatively suggests the package `Rmosek`. `Rmosek` is recommended so that the user utilizes its large-scale linear programming capabilities that enhance computational performance when the dimension of the parameter space and/or the number of moment (in)equalities are large. `lpSolve` can be installed from CRAN to your library with the usual command `install.packages()`. However, `Rmosek` on CRAN is only a meta-package designed to help with the installation of `Rmosek`. To install and run `Rmosek`, you must request a (free personal academic) licence and follow the installation instructions in Rmosek document on
 <https://www.mosek.com/documentation/>.
 
 ## Description
