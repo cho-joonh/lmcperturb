@@ -138,8 +138,10 @@ check_dimension <- function(data, psi_fn, mom_constr, par_constr) {
     } else if (nrow(moment_mat) != ncol(moment_b)) {
       stop("Number of columns of mom_constr[[1]](data) and number of rows of mom_constr[[2]](data) must match.", call.=FALSE)
     } else if (!is.null(par_constr)) {
-      if (length(psi) != ncol(par_constr[[1]]) + 1) {
-        stop("Number of columns of mom_constr[[1]](data) and number of columns of par_constr[[1]] must match.", call.=FALSE)
+      if (!is.null(par_constr[[1]])) {
+        if (length(psi) != ncol(par_constr[[1]]) + 1) {
+          stop("Number of columns of mom_constr[[1]](data) and number of columns of par_constr[[1]] must match.", call.=FALSE)
+        }
       }
     }
   }
