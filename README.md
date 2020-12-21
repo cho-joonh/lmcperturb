@@ -41,7 +41,7 @@ The lower or upper bound of a constraint in `mom_constr` and `par_constr` may be
 
 ## Examples
 
-### Missing Data Example
+### Example 1: Missing Data Example
 
 See Appendix B.1 of Cho and Russell (2020, <arXiv:1810.03180>). The DGP and the model can be declared as follows:
 
@@ -103,7 +103,7 @@ perturbCS(data, psi_fn, mom_constr, par_constr, method="lpSolve") # using lpSolv
 perturbCS(data, psi_fn, mom_constr, par_constr, method="Rmosek") # using Rmosek
 ```
 
-### Counterfactual Policy Example
+### Example 2: Counterfactual Policy Example
 
 See Appendix B.3 of Cho and Russell (2020, <arXiv:1810.03180>). The DGP and the model can be declared as follows:
 
