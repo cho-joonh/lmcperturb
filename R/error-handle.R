@@ -34,16 +34,40 @@ check_type <- function(data, psi_fn, mom_constr, par_constr, max_perturb, alpha,
   } else if (is.list(par_constr)) {
     if (length(par_constr) != 3) {
       stop("par_constr must be a list with three elements.", call.=FALSE)
-    } else if (!is.matrix(par_constr[[1]]) || !is.matrix(par_constr[[2]]) || !is.matrix(par_constr[[3]])) {
-      stop("All elements of par_constr must be matrices.", call.=FALSE)
-    } else if (nrow(par_constr[[1]]) != 2 || nrow(par_constr[[1]]) != 2) {
-      stop("par_constr[[1]] and par_constr[[3]] must be matrices with two rows.", call.=FALSE)
-    } else if (ncol(par_constr[[1]]) != ncol(par_constr[[2]])) {
-      stop("Number of rows of par_constr[[1]] and number of columns of par_constr[[2]] must equal the length of parameter vector.", call.=FALSE)
-    } else if (nrow(par_constr[[2]]) != ncol(par_constr[[3]])) {
-      stop("Number of columns of par_constr[[2]] and number of rows of par_constr[[3]] must match.", call.=FALSE)
-    } else if (!is.numeric(par_constr[[1]]) || !is.numeric(par_constr[[2]]) || !is.numeric(par_constr[[3]])) {
-      stop("All three elements of par_constr must be numeric matrices.", call.=FALSE)
+    } else {
+      if (!is.null(par_constr[[1]]) && !is.matrix(par_constr[[1]])) {
+        stop("par_constr[[1]] must be either NULL or a numeric matrix with two rows.", call.=FALSE)
+      } else if (is.matrix(par_constr[[1]])) {
+        if (nrow(par_constr[[1]]) != 2 || !is.numeric(par_constr[[1]])) {
+          stop("par_constr[[1]] must be a numeric matrix with two rows.", call.=FALSE)
+        } else if (any(par_constr[[1]][1,] > par_constr[[1]][2,])) {
+          stop("Elements in the first row of par_constr[[1]] cannot exceed those in the second row for each column.", call.=FALSE)
+        }
+      }
+      if (is.null(par_constr[[2]])) {
+        if (!is.null(par_constr[[3]])) {
+          stop("Both par_constr[[2]] and par_constr[[3]] must be NULL or numeric matrices.", call.=FALSE)
+        }
+      } else {
+        if (is.null(par_constr[[3]])) {
+          stop("par_constr[[3]] must be a numeric matrix with two rows.", call.=FALSE)
+        } else if (!is.matrix(par_constr[[2]]) || !is.matrix(par_constr[[3]])) {
+          stop("Both par_constr[[2]] and par_constr[[3]] must be NULL or numeric matrices.", call.=FALSE)
+        } else if (!is.numeric(par_constr[[2]]) || !is.numeric(par_constr[[3]])) {
+          stop("Both par_constr[[2]] and par_constr[[3]] must be NULL or numeric matrices.", call.=FALSE)
+        } else if (nrow(par_constr[[2]]) != ncol(par_constr[[3]])) {
+          stop("Number of columns of par_constr[[2]] and number of rows of par_constr[[3]] must match.", call.=FALSE)
+        } else if (nrow(par_constr[[3]]) != 2) {
+          stop("par_constr[[3]] must be a numeric matrix with two rows.", call.=FALSE)
+        } else if (any(par_constr[[3]][1,] > par_constr[[3]][2,])) {
+          stop("Elements in the first row of par_constr[[3]] cannot exceed those in the second row for each column.", call.=FALSE)
+        }
+      }
+      if (is.matrix(par_constr[[1]]) && is.matrix(par_constr[[2]])) {
+        if (ncol(par_constr[[1]]) != ncol(par_constr[[2]])) {
+          stop("Number of columns of par_constr[[1]] and par_constr[[2]] must match.", call.=FALSE)
+        }
+      }
     }
   }
   if (!is.list(max_perturb)) {

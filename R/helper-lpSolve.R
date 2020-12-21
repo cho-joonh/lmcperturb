@@ -16,6 +16,7 @@ par_constr_lpSolve <- function(data, mom_constr, par_constr) {
       par_ub = rep(1e+7, 2*dtheta)
     } else {
       par_ub = c(par_constr$indivb[2,], -par_constr$indivb[1,])
+      par_ub[par_ub == Inf] = 1e+7
     }
     if (!is.null(par_constr$jointmat)) {
       ind_ub = par_constr$jointb[2,] != Inf

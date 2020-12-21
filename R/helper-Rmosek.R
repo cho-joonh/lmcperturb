@@ -15,6 +15,8 @@ par_constr_Rmosek <- function(data, mom_constr, par_constr) {
       par_b = rbind(rep(-1e+7,dtheta), rep(1e+7,dtheta))
     } else {
       par_b = par_constr$indivb
+      par_b[par_b == -Inf] = -1e+7
+      par_b[par_b == Inf] = 1e+7
     }
     if (is.null(par_constr$jointmat)) {
       joint_mat = NULL
