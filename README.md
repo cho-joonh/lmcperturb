@@ -33,11 +33,18 @@ and has optional inputs with default values when not user-specified:
   + `par_constr`: a list containing three matrices as elements, where the first matrix has two rows that define the parameter space constraints for each coordinate, the second matrix is a linear map of the parameter vector that together with the third matrix (for lower and upper bounds) determine the boundaries of the parameter space (default `par_constr=NULL`);
   + `max_perturb`: a list containing two vectors as elements, where the first vector of length two determines the support of the perturbation distribution for the linear functional of interest, and the second vector of length two determines that for the moment constraints (default `max_perturb=list(c(-1e-6,1e-6),c(0,1e-6))`);
   + `alpha`: a numeric vector (possibly of length one) for desired significance level of the confidence set to be constructed (default `alpha=c(.10,.05,.01)`);
-  + `tol`: a nonnegative number for the tolerance level of small-sample thresholding (default `tol=1`);
+  + `tol`: a nonnegative number for the tolerance level of finite-sample thresholding (default `tol=1`);
   + `boot`: a positive integer for bootstrap sample size (default `boot=999`);
   + `method`: a string; either `"lpSolve"` or `"Rmosek"`.
 
 The lower or upper bound of a constraint in `mom_constr` and `par_constr` may be `-Inf` or `Inf` if no finite bound. When no natural parameter space constraint is present and `par_constr=NULL`, default parameter space constraints `[-1e+7,1e+7]` for each coordinate is imposed, i.e., a large hypercube. The package currently supports only two solvers, one from each of the packages `lpSolve` and `Rmosek`.
+
+The output of `perturbCS` contains:
+  + `Psihat_lb`: values of the two sample minimization programs for lower bound of identified set;
+  + `Psihat_ub`: values of the two sample maximization programs for upper bound of identified set;
+  + `PsiCS`: lower and upper confidence bounds for size(s) `alpha`;
+  + `threshold`: `TRUE` if finite-sample thresholding activated, and `FALSE` otherwise;
+  + `nfeasible`: number of bootstrap samples with nonempty estimated bounds.
 
 ## Examples
 
